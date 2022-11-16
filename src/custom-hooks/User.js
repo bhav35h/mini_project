@@ -9,7 +9,6 @@ const useUser = (email) => {
         getDocs(collection(db,"students")).then((data)=>{
             const filtered = data.docs.filter((doc)=>doc.data().email===email)
             setUserData(filtered[0]?.data())
-            console.log("udta",userData)
         })
     //   const getUsers = async () => {
         

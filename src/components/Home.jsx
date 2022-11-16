@@ -8,7 +8,9 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase";
 import { v4 } from "uuid"
 import useUser from "../custom-hooks/User";
-import { useEffect } from "react";
+// import { useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import Appendix from "./Appendix";
 
 
 
@@ -55,7 +57,8 @@ const Home = () => {
     await updateDoc(studentDoc,newField)
     // updateRefresh()
 
-    alert("It can take few minutes to save changes..")
+    alert("Reload page to see changes..")
+    setImageUpload(null)
     
   }
   
@@ -63,9 +66,14 @@ const Home = () => {
 
   return (
     <>
-      <div id="button">
-        <Button variant="danger"  onClick={handleLogout}>Logout</Button>
-      </div>
+    <Container style={{ width: "50%", marginBottom:"30%"}}>
+        <Row>
+          <Col>
+          <button type="button" className='btn btn-danger' onClick={handleLogout}>Logout</button>
+          
+
+          <Appendix/>
+      
       <div className="p-4 box mt-3 text-center border">
         Hello Welcome <br />
         {user && user.email} <br/>
@@ -82,12 +90,15 @@ const Home = () => {
         accept=".pdf,.docx"  
         id="formFile"
         onChange={(e)=>{setImageUpload(e.target.files[0])}}
+        
       />
         <Button variant="primary" onClick={uploadFile}>
           Update Resume
         </Button>
       </div>
-      
+      </Col>
+      </Row>
+      </Container>
     </>
   );
 };

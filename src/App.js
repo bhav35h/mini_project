@@ -1,4 +1,4 @@
-import { Container, Row, Col } from "react-bootstrap";
+
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Home from "./components/Home";
@@ -9,25 +9,16 @@ import Protected from "./components/Protected";
 import { UserAuthContextProvider } from "./context/UserAuthContext";
 import Unauthorized from "./components/Unauthorized";
 import Dashboard from "./components/Dashboard";
+import Create from "./Create";
 
 
-function App() {
+
+function App1() {
+  console.log(process.env)
   return (
     <div>
-      <div className="margin-bottom:0">
-        
-        <div className="container text-center margin-left:100px">
-            <img src="https://www.skit.ac.in/images/headers/skit_logo.png"/>
-            <br/>
-            <br/>
-            <h1>Resume Atlas</h1>      
-            <h3>Training & Placement Cell</h3>
-            <h5>Swami Keshvanand Institute of Technology, Jaipur</h5>
-          </div>
-      </div>
-      <Container style={{ width: "50%" }}>
-        <Row>
-          <Col>
+      
+      
           
             <UserAuthContextProvider>
             <Routes>
@@ -51,14 +42,12 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/denied" element={<Unauthorized/>}/>
 
-                
+                <Route path="/create" element={<Create/>}/>
                 </Routes>
             </UserAuthContextProvider>
-          </Col>
-        </Row>
-      </Container>
+          
     </div>
   );
 }
-// style={{ width: "400px" }}
-export default App;
+
+export default App1;

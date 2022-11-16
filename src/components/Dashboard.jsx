@@ -5,6 +5,8 @@ import { db } from '../firebase';
 import { collection,getDocs } from 'firebase/firestore';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import Appendix from './Appendix';
+import { Container, Row, Col } from "react-bootstrap";
 
 const Dashboard = () => {
   const usersCollectionRef = collection(db,"students")
@@ -12,7 +14,7 @@ const Dashboard = () => {
   const [temp,setTemp] = useState([])
   const [searchTerm,setSearchTerm] = useState("")
 
-  const { user, logOut } = useUserAuth();
+  const {  logOut } = useUserAuth();
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
@@ -44,8 +46,14 @@ const Dashboard = () => {
   
   },[])
   return (
+    <>
+    <Container style={{ width: "70%" , marginBottom:"30%"}}>
+        <Row>
+          <Col>
+          <button type="button" className='btn btn-danger' onClick={handleLogout}>Logout</button>
+    <Appendix/>
     <div className="container">
-      <button type="button" className='btn btn-danger' onClick={handleLogout}>Logout</button>
+      
       <div className="text-center mb-5">
       <h3>Students</h3>
       <br />
@@ -82,6 +90,10 @@ const Dashboard = () => {
       )
     })}
   </div>
+  </Col>
+  </Row>
+  </Container>
+  </>
   )
 }
 

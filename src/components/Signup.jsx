@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { useUserAuth } from "../context/UserAuthContext";
 import { db } from "../firebase";
 import { addDoc,collection, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase";
 import { v4 } from "uuid"
+import Appendix from "./Appendix";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -60,6 +62,10 @@ const Signup = () => {
 
   return (
     <>
+    <Container style={{ width: "50%" , marginBottom:"30%"}}>
+        <Row>
+          <Col>
+    <Appendix/>
       <div className="p-4 box">
         <h2 className="mb-3 text-center" >Register</h2>
         {error && <Alert variant="danger">{error}</Alert>}
@@ -109,6 +115,9 @@ const Signup = () => {
       <div className="p-4 box mt-3 text-center">
         Already have an account? <Link to="/">Log In</Link>
       </div>
+      </Col>
+      </Row>
+      </Container>
     </>
   );
 };
