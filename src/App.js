@@ -14,7 +14,6 @@ import Create from "./Create";
 
 
 function App1() {
-  console.log(process.env)
   return (
     <div>
       

@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Form, Alert } from "react-bootstrap";
+import { Form, Alert, InputGroup } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import { useUserAuth } from "../context/UserAuthContext";
 import Appendix from "./Appendix";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [passwordState,setPasswordState] = useState("password")
   const [check,setCheck] = useState(false)
   const { logIn } = useUserAuth();
   const navigate = useNavigate();
@@ -33,7 +35,15 @@ const Login = () => {
       setError(err.message);
     }
   };
-
+  const togglePassword = () => {
+    if(passwordState==="password"){
+      setPasswordState("text")
+      return
+    }
+    else{
+      setPasswordState("password")
+    }
+  }
   
 
   return (
@@ -46,25 +56,33 @@ const Login = () => {
               <h2 className="mb-3 text-center">Login</h2>
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+
+                <InputGroup className="mb-3">
                   <Form.Control
                     type="email"
-                    placeholder="Email address"
+                    placeholder="Email Address"
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                </Form.Group>
+                </InputGroup>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Control
-                    type="password"
+
+                <InputGroup className="mb-3" >
+                  <Form.Control type={passwordState}
                     placeholder="Password"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Form.Group>
+                    onChange={(e) => setPassword(e.target.value)}/>
+                  <Button variant="outline-secondary" id="button-addon2" onClick={togglePassword}>
+                    {passwordState==="password"?<i className="far fa-eye"></i>:<i className="far fa-eye-slash" ></i>}
+                  </Button>
+                </InputGroup>
+
+  
                 <div className="form-check form-switch">
-                  <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onChange={()=>{setCheck(true)}}/>
-                  <label className="form-check-label" for="flexSwitchCheckDefault">Are you a recruiter?</label>
+                  <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onChange={()=>{setCheck(!check)}}/>
+                  <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Are you a recruiter?</label>
                 </div>
+                <hr/>
 
                 <div className="d-grid gap-2">
                   <Button variant="primary" type="Submit">

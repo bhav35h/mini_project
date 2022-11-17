@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Form, Alert } from "react-bootstrap";
+import { Form, Alert, InputGroup } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import { useUserAuth } from "../context/UserAuthContext";
@@ -14,6 +14,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [name,setName] = useState("")
+  const [passwordState,setPasswordState] = useState("password")
 
   
   const [password, setPassword] = useState("");
@@ -59,6 +60,15 @@ const Signup = () => {
       setError(err.message);
     }
   };
+  const togglePassword = () => {
+    if(passwordState==="password"){
+      setPasswordState("text")
+      return
+    }
+    else{
+      setPasswordState("password")
+    }
+  }
 
   return (
     <>
@@ -69,24 +79,32 @@ const Signup = () => {
       <div className="p-4 box">
         <h2 className="mb-3 text-center" >Register</h2>
         {error && <Alert variant="danger">{error}</Alert>}
+
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+
+          <InputGroup className="mb-3">
             <Form.Control
               type="email"
-              placeholder="Email address"
-              required
+              placeholder="Email Address"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
               onChange={(e) => setEmail(e.target.value)}
             />
-          </Form.Group>
+          </InputGroup>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Control
-              type="password"
+
+          <InputGroup className="mb-3" >
+            <Form.Control type={passwordState}
               placeholder="Password"
-              required
               onChange={(e) => setPassword(e.target.value)}
             />
-          </Form.Group>
+            <Button variant="outline-secondary" id="button-addon2" onClick={togglePassword}>
+              {passwordState==="password"?<i className="far fa-eye"></i>:<i className="far fa-eye-slash" ></i>}
+            </Button>
+            </InputGroup>
+
+
+
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Control
               type="name"
@@ -95,6 +113,8 @@ const Signup = () => {
               onChange={(e) => setName(e.target.value)}
             />
           </Form.Group>
+
+
           
           <Form.Group className="mb-3" controlId="formFile">
           <label htmlFor="formFile" className="form-label">Upload Resume in .pdf,.docx format</label>
