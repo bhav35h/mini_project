@@ -68,6 +68,7 @@
   flex: 1;
 }
 
+
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -128,4 +129,7 @@
 
 .body button:active {
   transform: translateY(2px);
+}
+.error {
+  border-color: red;
 }

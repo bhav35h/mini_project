@@ -5,7 +5,6 @@ import { Button } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import { useUserAuth } from "../context/UserAuthContext";
 import Appendix from "./Appendix";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -22,15 +21,6 @@ const Login = () => {
     try {
       await logIn(email, password);
       check ? navigate("/dashboard") : navigate("/home");
-      // const filteredArray = Recruiters.filter(element => {
-      //   if (element.email === email) {
-      //     return true;
-      //   }
-      
-      //   return false;
-      // });
-      
-      // filteredArray.length!==0 ? navigate("/dashboard") : navigate("/home");
     } catch (err) {
       setError(err.message);
     }

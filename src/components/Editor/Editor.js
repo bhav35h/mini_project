@@ -8,7 +8,9 @@ import styles from "./Editor.module.css";
 function Editor(props) {
   const sections = props.sections;
   const information = props.information;
-
+  // const [nameError,setNameError] = useState(false)
+  // const [phoneError,setPhoneError] = useState(false)
+  // const [titleError,setTitleError] = useState(false)
   const [activeSectionKey, setActiveSectionKey] = useState(
     Object.keys(sections)[0]
   );
@@ -34,7 +36,7 @@ function Editor(props) {
     tempValues.points[index] = value;
     setValues(tempValues);
   };
-
+  
   
   const projectBody = (
     <div className={styles.detail}>
@@ -142,22 +144,45 @@ function Editor(props) {
     </div>
   );
   const basicInfoBody = (
+    
     <div className={styles.detail}>
       <div className={styles.row}>
         <InputControl
+          // className={nameError ? styles.error : {}}
           label="Name"
           placeholder="Enter your full name eg. Aashu"
           value={values.name}
-          onChange={(event) =>
-            setValues((prev) => ({ ...prev, name: event.target.value }))
+          // onChange={(event) =>
+          //   setValues((prev) => ({ ...prev, name: event.target.value }))
+          // }
+          onChange={(event)=>
+            setValues((prev)=>{
+              if(event.target.value.match("^([a-zA-Z ])*$")){
+                return {...prev, name:event.target.value}
+              }
+              else{
+                return {...prev}
+              }
+            })
           }
         />
         <InputControl
+          // className = {titleError ? styles.error : {}}
           label="Title"
           value={values.title}
           placeholder="Enter your title eg. Frontend developer"
-          onChange={(event) =>
-            setValues((prev) => ({ ...prev, title: event.target.value }))
+          // onChange={(event) =>
+          //   setValues((prev) => ({ ...prev, title: event.target.value }))
+          // }
+          onChange={(event)=>
+            setValues((prev)=>{
+              if(event.target.value.match("^([a-zA-Z ])*$")){
+                return {...prev, title:event.target.value}
+              }
+              else{
+                return {...prev}
+              }
+            })
           }
         />
       </div>
@@ -187,13 +212,25 @@ function Editor(props) {
           onChange={(event) =>
             setValues((prev) => ({ ...prev, email: event.target.value }))
           }
+          
         />
         <InputControl
+          // className={phoneError?styles.error:{}}
           label="Enter phone"
           value={values.phone}
           placeholder="Enter your phone number"
-          onChange={(event) =>
-            setValues((prev) => ({ ...prev, phone: event.target.value }))
+          // onChange={(event) =>
+          //   setValues((prev) => ({ ...prev, phone: event.target.value }))
+          // }
+          onChange={(event)=>
+            setValues((prev)=>{
+              if(event.target.value.match("^[0-9]*$")){
+                return {...prev, phone:event.target.value}
+              }
+              else{
+                return {...prev}
+              }
+            })
           }
         />
       </div>
@@ -278,8 +315,9 @@ function Editor(props) {
           title: values.title,
           linkedin: values.linkedin,
           github: values.github,
-          email: values.email,
+          email: values.email.match("^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$")? values.email : "",
           phone: values.phone,
+        
         };
 
         props.setInformation((prev) => ({
@@ -505,6 +543,18 @@ function Editor(props) {
       college: activeInfo.details[activeDetailIndex]?.college || "",
     });
   }, [activeDetailIndex]);
+
+  // useEffect(()=>{
+  //   // values.name.match("^[a-zA-Z ]*$")===null ? setNameError(true) : setNameError(false)
+  //   values.title.match("^[a-zA-Z ]*$")===null ? setTitleError(true) : setTitleError(false)
+    
+  // },[values.title])
+  
+  // useEffect(()=>{
+  //   if(values.phone.match("^([7-9][0-9]{9})*$")===null && values.phone!==null)
+  //   {setPhoneError(true)}
+  //   else{setPhoneError(false)} 
+  // },[values.phone])
 
   return (
     <div className={styles.container}>
